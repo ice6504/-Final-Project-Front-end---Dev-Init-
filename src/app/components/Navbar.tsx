@@ -1,0 +1,20 @@
+import React from "react";
+
+function Navbar() {
+  return (
+    <div className="w-full navbar bg-primary text-base-100 fixed top-0 lg:hidden">
+      <div className="flex-none ">
+        <label
+          htmlFor="my-drawer-3"
+          aria-label="open sidebar"
+          className="btn btn-square btn-ghost"
+        >
+          <i className="fa-solid fa-bars fa-xl"></i>
+        </label>
+      </div>
+      <div className="flex-1 px-2 mx-2">Navbar Title</div>
+    </div>
+  );
+}
+
+export default Navbar;
