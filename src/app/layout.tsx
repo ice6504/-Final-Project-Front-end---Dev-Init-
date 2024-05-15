@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
-import Head from "next/head";
-import { Inter } from "next/font/google";
+import { Prompt } from "next/font/google";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./globals.css";
 
 // components
 import Drawer from "./components/Drawer";
 
-const inter = Inter({ subsets: ["latin"] });
+const prompt = Prompt({
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   icons: {
@@ -24,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-theme="light">
-      <body className={inter.className}>
+      <body className={prompt.className}>
         <Drawer>{children}</Drawer>
       </body>
     </html>

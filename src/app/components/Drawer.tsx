@@ -14,7 +14,7 @@ function Drawer({
           {/* Navbar */}
           <Navbar />
           {/* Page content here */}
-          <div className="min-h-screen w-full lg:w-[calc(100vw-15rem)] max-lg:pt-[4.5rem]">
+          <div className="min-h-screen w-full lg:w-[calc(100vw-15rem)] pt-10 max-lg:pt-[4.5rem]">
             {children}
           </div>
         </div>
@@ -26,7 +26,7 @@ function Drawer({
           ></label>
           <div className="py-2 w-60 h-screen bg-base-200 px-2">
             <div className="flex justify-between items-center">
-              <Image src="/Logo_Light.png" alt="Logo" width={100} height={0} />
+              <Image src="/Logo.svg" alt="Logo" width={100} height={0} />
               <div className="">
                 <button
                   // onClick={}
