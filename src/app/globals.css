@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    font-family: var(--font-prompt);
+    font-style: normal;
+    scroll-behavior: smooth;
+    transition: 0.3s;
+  }
+}
+
+@layer components {
+  .btn {
+    font-weight: 800;
+  }
+  .input:focus-within {
+    border: none;
+    outline: transparent;
+    outline-offset: 0;
+  }
+}

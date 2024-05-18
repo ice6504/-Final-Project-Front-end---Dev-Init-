@@ -9,6 +9,7 @@ import Drawer from "./components/Drawer";
 const prompt = Prompt({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   subsets: ["latin"],
+  variable: "--font-prompt",
 });
 
 export const metadata: Metadata = {
@@ -26,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-theme="light">
-      <body className={prompt.className}>
+      <body className={prompt.variable}>
         <Drawer>{children}</Drawer>
       </body>
     </html>

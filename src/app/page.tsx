@@ -1,9 +1,7 @@
 export default function Home() {
   return (
-    <main className="px-5">
-      <button className="btn btn-primary">
-        Hello World <i className="fa-solid fa-house"></i>
-      </button>
+    <main className="h-full grid place-items-center">
+      <button className="btn">kdsn</button>
     </main>
   );
 }

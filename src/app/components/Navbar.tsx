@@ -1,6 +1,10 @@
-import React from "react";
+import React, { FC } from "react";
 
-function Navbar() {
+interface HeaderProps {
+  title: string;
+}
+
+const Navbar: FC<HeaderProps> = ({ title }) => {
   return (
     <div className="w-full navbar bg-primary text-base-100 z-[100] fixed top-0 lg:hidden">
       <div className="flex-none ">
@@ -12,9 +16,9 @@ function Navbar() {
           <i className="fa-solid fa-bars fa-xl"></i>
         </label>
       </div>
-      <div className="flex-1 px-2 mx-2">Navbar Title</div>
+      <div className="flex-1 px-2 mx-2 font-bold text-xl">{title}</div>
     </div>
   );
-}
+};
 
 export default Navbar;
