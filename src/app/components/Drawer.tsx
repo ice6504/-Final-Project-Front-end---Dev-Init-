@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { useParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import Navbar from "./Navbar";
@@ -7,11 +8,12 @@ import Navbar from "./Navbar";
 const STORAGE_KEY = "sidebarLinks";
 
 function Drawer({ children }: { children: React.ReactNode }) {
+  const { title } = useParams<{ title: string }>();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalTitleOpen, setIsModalTitleOpen] = useState(false);
   const [links, setLinks] = useState<
-    { id: number; title: string; type: string; href: string }[]
+    { id: number; date: string; title: string; type: string; href: string }[]
   >([]);
   const [newLinkType, setNewLinkType] = useState<"Note" | "ToDo" | null>(null);
   const [newLinkTitle, setNewLinkTitle] = useState("");
@@ -29,6 +31,8 @@ function Drawer({ children }: { children: React.ReactNode }) {
     }, 300);
     return () => clearTimeout(handle);
   }, [links]);
+
+  const displayedTitle = title || "Home Page";
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
@@ -58,9 +62,10 @@ function Drawer({ children }: { children: React.ReactNode }) {
     }/${date.getFullYear()}`;
     const newLink = {
       id: links.length + 1,
-      title: `${title} - ${formattedDate}`,
+      date: `${formattedDate}`,
+      title: `${title}`,
       type: `${newLinkType}`,
-      href: `/${newLinkType?.toLowerCase()}`,
+      href: `/${newLinkType?.toLowerCase()}/${title}`,
     };
     setLinks([...links, newLink]);
   };
@@ -76,7 +81,7 @@ function Drawer({ children }: { children: React.ReactNode }) {
           onChange={toggleDrawer}
         />
         <div className="drawer-content flex flex-col">
-          <Navbar title="Untitled" />
+          <Navbar title={displayedTitle} />
           <div className="min-h-screen w-full lg:w-[calc(100vw-15rem)] pt-10 max-lg:pt-[4.5rem]">
             {children}
           </div>
@@ -94,7 +99,14 @@ function Drawer({ children }: { children: React.ReactNode }) {
                 className="active:scale-90 transition-all ease-in-out"
                 onClick={toggleDrawer}
               >
-                <Image src="/Logo.svg" alt="Logo" width={100} height={0} />
+                <Image
+                  className="w-28"
+                  src="/Logo.svg"
+                  alt="Logo"
+                  width={0}
+                  height={0}
+                  priority={true}
+                />
               </Link>
               <div>
                 <button
@@ -117,7 +129,19 @@ function Drawer({ children }: { children: React.ReactNode }) {
               <ul className="menu gap-2 text-lg font-bold">
                 {links.map((link) => (
                   <li key={link.id}>
-                    <Link onClick={toggleDrawer} href={link.href}>{link.title}</Link>
+                    <Link
+                      className={`focus-within:bg-primary focus-within:text-base-100 h-20 flex items-center
+                        ${
+                          displayedTitle === link.title
+                            ? "bg-primary text-base-100"
+                            : ""
+                        }
+                      `}
+                      onClick={toggleDrawer}
+                      href={link.href}
+                    >
+                      {`${link.title} - ${link.date}`}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -177,14 +201,22 @@ function Drawer({ children }: { children: React.ReactNode }) {
             <form onSubmit={handleFormSubmit}>
               <input
                 type="text"
+                maxLength={10}
                 placeholder="Add Title"
                 className="input bg-primary text-base-100 placeholder:text-base-100/50 w-full mt-8"
                 value={newLinkTitle}
                 onChange={(e) => setNewLinkTitle(e.target.value)}
               />
+              {newLinkTitle.length === 10 ? (
+                <>
+                  <div className="badge badge-primary badge-outline my-2">
+                    Max Length is 10
+                  </div>
+                </>
+              ) : null}
               <button
                 type="submit"
-                className="btn btn-primary btn-outline  w-full mt-4"
+                className="btn btn-primary btn-outline  w-full mt-2"
               >
                 Save
               </button>

@@ -15,6 +15,9 @@
   .btn {
     font-weight: 800;
   }
+  .btn-primary{
+    color: white;
+  }
   .input:focus-within {
     border: none;
     outline: transparent;
