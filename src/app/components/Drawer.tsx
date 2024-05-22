@@ -28,11 +28,11 @@ function Drawer({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const handle = setTimeout(() => {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(links));
-    }, 300);
+    }, 50);
     return () => clearTimeout(handle);
   }, [links]);
 
-  const displayedTitle = title || "Home Page";
+  const displayedTitle = decodeURIComponent(title) || "Home Page";
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
@@ -65,7 +65,7 @@ function Drawer({ children }: { children: React.ReactNode }) {
       date: `${formattedDate}`,
       title: `${title}`,
       type: `${newLinkType}`,
-      href: `/${newLinkType?.toLowerCase()}/${title}`,
+      href: `/${newLinkType?.toLowerCase()}/${title}&${links.length + 1}`,
     };
     setLinks([...links, newLink]);
   };
@@ -82,9 +82,8 @@ function Drawer({ children }: { children: React.ReactNode }) {
         />
         <div className="drawer-content flex flex-col">
           <Navbar title={displayedTitle} />
-          <div className="min-h-screen w-full lg:w-[calc(100vw-15rem)] pt-10 max-lg:pt-[4.5rem]">
-            {children}
-          </div>
+          {/* Content */}
+          <div className="min-h-full max-lg:pt-16">{children}</div>
         </div>
         <div className="drawer-side z-[101]">
           <label
@@ -92,8 +91,8 @@ function Drawer({ children }: { children: React.ReactNode }) {
             aria-label="close sidebar"
             className="drawer-overlay"
           ></label>
-          <div className="py-2 w-60 bg-base-200 px-2 h-full max-h-screen">
-            <div className="flex justify-between items-center h-fit">
+          <div className="w-60 py-2 bg-base-200 px-2 min-h-full">
+            <div className="flex justify-between items-center">
               <Link
                 href="/"
                 className="active:scale-90 transition-all ease-in-out"
@@ -117,7 +116,8 @@ function Drawer({ children }: { children: React.ReactNode }) {
                 </button>
               </div>
             </div>
-            <label className="input input-sm rounded-full h-10 flex items-center gap-2 mt-3 mb-2">
+            {/* SearchBar */}
+            <label className="input input-sm rounded-full h-10 flex items-center gap-2 mt-3">
               <i className="fa-solid fa-magnifying-glass"></i>
               <input
                 type="text"
@@ -125,14 +125,15 @@ function Drawer({ children }: { children: React.ReactNode }) {
                 placeholder="Search"
               />
             </label>
-            <div className="overflow-y-scroll h-96">
+            {/* Nav */}
+            <div>
               <ul className="menu gap-2 text-lg font-bold">
                 {links.map((link) => (
                   <li key={link.id}>
                     <Link
                       className={`focus-within:bg-primary focus-within:text-base-100 h-20 flex items-center
                         ${
-                          displayedTitle === link.title
+                          displayedTitle === link.title  
                             ? "bg-primary text-base-100"
                             : ""
                         }

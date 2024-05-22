@@ -9,7 +9,7 @@ interface Params {
 }
 
 const TodoPage: FC<TodoPageProps> = ({ params }) => {
-  return <div>{params.title} page</div>;
+  return <div>{decodeURIComponent(params.title)} page</div>;
 };
 
 export default TodoPage;

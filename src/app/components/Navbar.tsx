@@ -6,7 +6,7 @@ interface HeaderProps {
 
 const Navbar: FC<HeaderProps> = ({ title }) => {
   return (
-    <div className="w-full navbar bg-primary text-base-100 z-[100] fixed top-0 lg:hidden">
+    <div className="navbar bg-primary text-base-100 z-[100] fixed top-0 lg:hidden">
       <div className="flex-none ">
         <label
           htmlFor="my-drawer-3"
