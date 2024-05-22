@@ -32,7 +32,24 @@ function Drawer({ children }: { children: React.ReactNode }) {
     return () => clearTimeout(handle);
   }, [links]);
 
-  const displayedTitle = decodeURIComponent(title) || "Home Page";
+  let displayedTitle: string;
+  let linkId: number;
+  if (title) {
+    const decodedTitle = decodeURIComponent(title);
+    const ampersandIndex = decodedTitle.indexOf("&");
+    const cleanTitle =
+      ampersandIndex !== -1
+        ? decodedTitle.slice(0, ampersandIndex)
+        : decodedTitle;
+    const paramsId = decodedTitle.slice(
+      ampersandIndex + 1,
+      decodedTitle.length
+    );
+    linkId = Number(paramsId);
+    displayedTitle = decodeURIComponent(cleanTitle);
+  } else {
+    displayedTitle = "Home Page";
+  }
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
@@ -133,7 +150,7 @@ function Drawer({ children }: { children: React.ReactNode }) {
                     <Link
                       className={`focus-within:bg-primary focus-within:text-base-100 h-20 flex items-center
                         ${
-                          displayedTitle === link.title  
+                          displayedTitle === link.title && linkId === link.id
                             ? "bg-primary text-base-100"
                             : ""
                         }
