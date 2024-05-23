@@ -17,17 +17,21 @@ interface Links {
 
 function Drawer({ children }: { children: React.ReactNode }) {
   const { title } = useParams<{ title: string }>();
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isModalTitleOpen, setIsModalTitleOpen] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isModalTitleOpen, setIsModalTitleOpen] = useState<boolean>(false);
   const [links, setLinks] = useState<Links[]>([]);
+  const [filteredLinks, setFilteredLinks] = useState<Links[]>([]);
   const [newLinkType, setNewLinkType] = useState<"Note" | "ToDo" | null>(null);
-  const [newLinkTitle, setNewLinkTitle] = useState("");
+  const [newLinkTitle, setNewLinkTitle] = useState<string>("");
+  const [search, setSearch] = useState<string>("");
 
   useEffect(() => {
     const savedLinks = localStorage.getItem(STORAGE_KEY);
     if (savedLinks) {
-      setLinks(JSON.parse(savedLinks));
+      const parsedLinks = JSON.parse(savedLinks);
+      setLinks(parsedLinks);
+      setFilteredLinks(parsedLinks);
     }
   }, []);
 
@@ -37,6 +41,11 @@ function Drawer({ children }: { children: React.ReactNode }) {
     }, 50);
     return () => clearTimeout(handle);
   }, [links]);
+
+  useEffect(() => {
+    setSearch("");
+    setFilteredLinks(links);
+  }, [title, links]);
 
   let displayedTitle: string;
   let linkId: number | undefined;
@@ -88,8 +97,23 @@ function Drawer({ children }: { children: React.ReactNode }) {
       type: `${newLinkType}`,
       href: `/${newLinkType?.toLowerCase()}/${title}&${links.length + 1}`,
     };
-    setLinks([...links, newLink]);
+    const updatedLinks = [...links, newLink];
+    setLinks(updatedLinks);
+    setFilteredLinks(updatedLinks);
   };
+
+  const searchPage = (keyword: string) => {
+    if (keyword && keyword.trim().length > 0) {
+      const searchResults = links.filter((link) =>
+        link.title.toLowerCase().includes(keyword.toLowerCase())
+      );
+      setFilteredLinks(searchResults);
+    } else {
+      setFilteredLinks(links);
+    }
+  };
+
+  console.log(filteredLinks);
 
   return (
     <>
@@ -144,29 +168,51 @@ function Drawer({ children }: { children: React.ReactNode }) {
                 type="text"
                 className="grow font-medium"
                 placeholder="Search"
-
+                value={search}
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                  searchPage(e.target.value);
+                }}
               />
             </label>
             {/* Nav */}
             <div>
               <ul className="menu gap-2 text-lg font-bold">
-                {links.map((link) => (
-                  <li key={link.id}>
-                    <Link
-                      className={`focus-within:bg-primary focus-within:text-base-100 h-20 flex items-center
-                        ${
-                          displayedTitle === link.title && linkId === link.id
-                            ? "bg-primary text-base-100"
-                            : ""
-                        }
-                      `}
-                      onClick={toggleDrawer}
-                      href={link.href}
-                    >
-                      {`${link.title} - ${link.date}`}
-                    </Link>
-                  </li>
-                ))}
+                {search && filteredLinks.length > 0
+                  ? filteredLinks.map((link) => (
+                      <li key={link.id}>
+                        <Link
+                          className={`focus-within:bg-primary focus-within:text-base-100 h-20 flex items-center
+                          ${
+                            displayedTitle === link.title && linkId === link.id
+                              ? "bg-primary text-base-100"
+                              : ""
+                          }
+                        `}
+                          onClick={toggleDrawer}
+                          href={link.href}
+                        >
+                          {`${link.title} - ${link.date}`}
+                        </Link>
+                      </li>
+                    ))
+                  : links.map((link) => (
+                      <li key={link.id}>
+                        <Link
+                          className={`focus-within:bg-primary focus-within:text-base-100 h-20 flex items-center
+                          ${
+                            displayedTitle === link.title && linkId === link.id
+                              ? "bg-primary text-base-100"
+                              : ""
+                          }
+                        `}
+                          onClick={toggleDrawer}
+                          href={link.href}
+                        >
+                          {`${link.title} - ${link.date}`}
+                        </Link>
+                      </li>
+                    ))}
               </ul>
             </div>
           </div>
