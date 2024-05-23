@@ -113,8 +113,6 @@ function Drawer({ children }: { children: React.ReactNode }) {
     }
   };
 
-  console.log(filteredLinks);
-
   return (
     <>
       <div className="drawer lg:drawer-open">
@@ -178,7 +176,7 @@ function Drawer({ children }: { children: React.ReactNode }) {
             {/* Nav */}
             <div>
               <ul className="menu gap-2 text-lg font-bold">
-                {search && filteredLinks.length > 0
+                {search
                   ? filteredLinks.map((link) => (
                       <li key={link.id}>
                         <Link

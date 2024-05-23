@@ -23,11 +23,16 @@
     outline: transparent;
     outline-offset: 0;
   }
-
   .menu {
-    li > a:hover {
-      color: white;
-      background-color: oklch(var(--n));
+    & li > a {
+      &:hover {
+        color: white;
+        background-color: oklch(var(--n));
+      }
+      &:focus {
+        color: white;
+        background-color: oklch(var(--p));
+      }
     }
   }
 }
