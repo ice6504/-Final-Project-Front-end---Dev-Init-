@@ -11,18 +11,14 @@ export default function Home() {
         <div className="xl:w-full h-full flex flex-col gap-2">
           <h3 className="text-2xl font-semibold px-1">📖 My Note</h3>
           <div className="bg-primary rounded-box overflow-y-scroll xl:min-h-full h-[30rem]">
-            <div className="menu menu-lg text-white">
-              <ListLinks type="Note" />
-            </div>
+            <ListLinks type="Note" />
           </div>
         </div>
         {/* MyToDo */}
         <div className="xl:w-full h-full flex flex-col gap-2">
           <h3 className="text-2xl font-semibold px-1">📝 My ToDo</h3>
           <div className="bg-primary rounded-box overflow-y-scroll xl:min-h-full h-[30rem]">
-            <div className="menu menu-lg text-white">
-              <ListLinks type="ToDo" />
-            </div>
+            <ListLinks type="ToDo" />
           </div>
         </div>
       </div>

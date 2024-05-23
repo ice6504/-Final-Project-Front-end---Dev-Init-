@@ -100,6 +100,7 @@ function Drawer({ children }: { children: React.ReactNode }) {
     const updatedLinks = [...links, newLink];
     setLinks(updatedLinks);
     setFilteredLinks(updatedLinks);
+    window.location.reload();
   };
 
   const searchPage = (keyword: string) => {
@@ -134,8 +135,16 @@ function Drawer({ children }: { children: React.ReactNode }) {
             aria-label="close sidebar"
             className="drawer-overlay"
           ></label>
-          <div className="w-60 py-2 bg-base-200 px-2 min-h-full">
-            <div className="flex justify-between items-center">
+          <div
+            className={`w-60 py-2 bg-base-200 px-2 ${
+              links.length === 0 ? "h-full flex flex-col" : "min-h-full"
+            } `}
+          >
+            <div
+              className={`flex ${
+                links.length > 0 ? "justify-between" : "justify-center"
+              } items-center`}
+            >
               <Link
                 href="/"
                 className="active:scale-90 transition-all ease-in-out"
@@ -150,14 +159,16 @@ function Drawer({ children }: { children: React.ReactNode }) {
                   priority={true}
                 />
               </Link>
-              <div>
-                <button
-                  onClick={toggleModal}
-                  className="btn btn-ghost btn-square size-fit px-2"
-                >
-                  <i className="fa-solid fa-pen-to-square fa-2xl"></i>
-                </button>
-              </div>
+              {links.length > 0 ? (
+                <div>
+                  <button
+                    onClick={toggleModal}
+                    className="btn btn-ghost btn-square size-fit px-2"
+                  >
+                    <i className="fa-solid fa-pen-to-square fa-2xl"></i>
+                  </button>
+                </div>
+              ) : null}
             </div>
             {/* SearchBar */}
             <label className="input input-sm rounded-full h-10 flex items-center gap-2 mt-3">
@@ -174,44 +185,57 @@ function Drawer({ children }: { children: React.ReactNode }) {
               />
             </label>
             {/* Nav */}
-            <div>
-              <ul className="menu gap-2 text-lg font-bold">
-                {search
-                  ? filteredLinks.map((link) => (
-                      <li key={link.id}>
-                        <Link
-                          className={`focus-within:bg-primary focus-within:text-base-100 h-20 flex items-center
+            <div
+              className={`${links.length === 0 ? "h-full flex flex-col" : ""}`}
+            >
+              {links.length > 0 ? (
+                <ul className="menu gap-2 text-lg font-bold">
+                  {search
+                    ? filteredLinks.map((link) => (
+                        <li key={link.id}>
+                          <Link
+                            className={`focus-within:bg-primary focus-within:text-base-100 h-20 flex items-center
                           ${
                             displayedTitle === link.title && linkId === link.id
                               ? "bg-primary text-base-100"
                               : ""
                           }
                         `}
-                          onClick={toggleDrawer}
-                          href={link.href}
-                        >
-                          {`${link.title} - ${link.date}`}
-                        </Link>
-                      </li>
-                    ))
-                  : links.map((link) => (
-                      <li key={link.id}>
-                        <Link
-                          className={`focus-within:bg-primary focus-within:text-base-100 h-20 flex items-center
+                            onClick={toggleDrawer}
+                            href={link.href}
+                          >
+                            {`${link.title} - ${link.date}`}
+                          </Link>
+                        </li>
+                      ))
+                    : links.map((link) => (
+                        <li key={link.id}>
+                          <Link
+                            className={`focus-within:bg-primary focus-within:text-base-100 h-20 flex items-center
                           ${
                             displayedTitle === link.title && linkId === link.id
                               ? "bg-primary text-base-100"
                               : ""
                           }
                         `}
-                          onClick={toggleDrawer}
-                          href={link.href}
-                        >
-                          {`${link.title} - ${link.date}`}
-                        </Link>
-                      </li>
-                    ))}
-              </ul>
+                            onClick={toggleDrawer}
+                            href={link.href}
+                          >
+                            {`${link.title} - ${link.date}`}
+                          </Link>
+                        </li>
+                      ))}
+                </ul>
+              ) : (
+                <div className="h-full grid place-content-center">
+                  <button
+                    onClick={toggleModal}
+                    className="btn btn-ghost btn-block size-32 text-5xl text-black/65"
+                  >
+                    <i className="fa-solid fa-pen-to-square fa-2xl"></i>
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>

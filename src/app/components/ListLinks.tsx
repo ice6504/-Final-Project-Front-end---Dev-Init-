@@ -26,24 +26,34 @@ const ListLinks: FC<Props> = ({ type }) => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   const preventLinks = localStorage.getItem(STORAGE_KEY);
-  //   if (preventLinks) {
-  //     setLinks(JSON.parse(preventLinks));
-  //   }
-  // }, [links]);
-
   const filterLinks = links.filter((link) => link.type === type);
 
   return (
     <>
-      {filterLinks.map((link) => {
-        return (
-          <li key={link.id}>
-            <Link href={link.href}>{link.title}</Link>
-          </li>
-        );
-      })}
+      {filterLinks.length > 0 ? (
+        filterLinks.map((link) => {
+          return (
+            <div key={link.id} className="menu menu-lg text-white">
+              <li>
+                <Link href={link.href}>{link.title}</Link>
+              </li>
+            </div>
+          );
+        })
+      ) : (
+        <>
+          <div className="h-full grid place-content-center text-7xl sm:text-9xl text-white/30">
+            <div className="text-center">
+              {type === "Note" ? (
+                <i className="fa-regular fa-note-sticky"></i>
+              ) : (
+                <i className="fa-solid fa-list-check"></i>
+              )}
+              <p className="text-3xl sm:text-5xl font-medium my-2">Empty</p>
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 };
