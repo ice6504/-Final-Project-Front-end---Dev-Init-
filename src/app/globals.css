@@ -15,12 +15,19 @@
   .btn {
     font-weight: 800;
   }
-  .btn-primary{
+  .btn-primary {
     color: white;
   }
   .input:focus-within {
     border: none;
     outline: transparent;
     outline-offset: 0;
+  }
+
+  .menu {
+    li > a:hover {
+      color: white;
+      background-color: oklch(var(--n));
+    }
   }
 }

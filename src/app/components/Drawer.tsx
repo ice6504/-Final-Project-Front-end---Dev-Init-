@@ -7,14 +7,20 @@ import Navbar from "./Navbar";
 
 const STORAGE_KEY = "sidebarLinks";
 
+interface Links {
+  id: number;
+  date: string;
+  title: string;
+  type: string;
+  href: string;
+}
+
 function Drawer({ children }: { children: React.ReactNode }) {
   const { title } = useParams<{ title: string }>();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalTitleOpen, setIsModalTitleOpen] = useState(false);
-  const [links, setLinks] = useState<
-    { id: number; date: string; title: string; type: string; href: string }[]
-  >([]);
+  const [links, setLinks] = useState<Links[]>([]);
   const [newLinkType, setNewLinkType] = useState<"Note" | "ToDo" | null>(null);
   const [newLinkTitle, setNewLinkTitle] = useState("");
 
@@ -33,20 +39,18 @@ function Drawer({ children }: { children: React.ReactNode }) {
   }, [links]);
 
   let displayedTitle: string;
-  let linkId: number;
+  let linkId: number | undefined;
   if (title) {
     const decodedTitle = decodeURIComponent(title);
     const ampersandIndex = decodedTitle.indexOf("&");
-    const cleanTitle =
-      ampersandIndex !== -1
-        ? decodedTitle.slice(0, ampersandIndex)
-        : decodedTitle;
-    const paramsId = decodedTitle.slice(
-      ampersandIndex + 1,
-      decodedTitle.length
-    );
-    linkId = Number(paramsId);
-    displayedTitle = decodeURIComponent(cleanTitle);
+
+    if (ampersandIndex !== -1) {
+      displayedTitle = decodedTitle.slice(0, ampersandIndex);
+      const paramsId = decodedTitle.slice(ampersandIndex + 1);
+      linkId = Number(paramsId);
+    } else {
+      displayedTitle = decodedTitle;
+    }
   } else {
     displayedTitle = "Home Page";
   }
@@ -88,7 +92,7 @@ function Drawer({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <div>
+    <>
       <div className="drawer lg:drawer-open">
         <input
           id="my-drawer-3"
@@ -100,7 +104,7 @@ function Drawer({ children }: { children: React.ReactNode }) {
         <div className="drawer-content flex flex-col">
           <Navbar title={displayedTitle} />
           {/* Content */}
-          <div className="min-h-full max-lg:pt-16">{children}</div>
+          <main className="min-h-full max-lg:pt-16">{children}</main>
         </div>
         <div className="drawer-side z-[101]">
           <label
@@ -140,6 +144,7 @@ function Drawer({ children }: { children: React.ReactNode }) {
                 type="text"
                 className="grow font-medium"
                 placeholder="Search"
+
               />
             </label>
             {/* Nav */}
@@ -242,7 +247,7 @@ function Drawer({ children }: { children: React.ReactNode }) {
           </div>
         </dialog>
       )}
-    </div>
+    </>
   );
 }
 
