@@ -5,6 +5,7 @@ import "./globals.css";
 
 // components
 import Drawer from "./components/Drawer";
+import Loading from "./components/Loading";
 
 const prompt = Prompt({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -28,7 +29,9 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="light">
       <body className={prompt.variable}>
-        <Drawer>{children}</Drawer>
+        <Loading>
+          <Drawer>{children}</Drawer>
+        </Loading>
       </body>
     </html>
   );

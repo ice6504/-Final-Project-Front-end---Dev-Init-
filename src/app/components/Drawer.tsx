@@ -4,6 +4,7 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import Navbar from "./Navbar";
+import { stringify } from "querystring";
 
 const STORAGE_KEY = "sidebarLinks";
 
@@ -100,6 +101,7 @@ function Drawer({ children }: { children: React.ReactNode }) {
     const updatedLinks = [...links, newLink];
     setLinks(updatedLinks);
     setFilteredLinks(updatedLinks);
+    localStorage.setItem(newLink.id.toString(), JSON.stringify([]));
     window.location.reload();
   };
 
@@ -230,7 +232,7 @@ function Drawer({ children }: { children: React.ReactNode }) {
                 <div className="h-full grid place-content-center">
                   <button
                     onClick={toggleModal}
-                    className="btn btn-ghost btn-block size-32 text-5xl text-black/65"
+                    className="btn btn-ghost btn-block no-animation size-32 text-5xl text-black/65"
                   >
                     <i className="fa-solid fa-pen-to-square fa-2xl"></i>
                   </button>
