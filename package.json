@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@blocknote/core": "^0.13.3",
+    "@blocknote/mantine": "^0.13.3",
+    "@blocknote/react": "^0.13.3",
     "@fortawesome/fontawesome-free": "^6.5.2",
     "next": "14.2.3",
     "react": "^18",

@@ -4,7 +4,6 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import Navbar from "./Navbar";
-import { stringify } from "querystring";
 
 const STORAGE_KEY = "sidebarLinks";
 
@@ -101,8 +100,7 @@ function Drawer({ children }: { children: React.ReactNode }) {
     const updatedLinks = [...links, newLink];
     setLinks(updatedLinks);
     setFilteredLinks(updatedLinks);
-    localStorage.setItem(newLink.id.toString(), JSON.stringify([]));
-    window.location.reload();
+    window.location.href = newLink.href;
   };
 
   const searchPage = (keyword: string) => {
