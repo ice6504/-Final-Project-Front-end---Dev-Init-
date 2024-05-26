@@ -1,5 +1,6 @@
 "use client";
 import { FC, useState, useEffect } from "react";
+import ToTop from "@/app/components/ToTop";
 
 interface TodoPageProps {
   params: Params;
@@ -10,7 +11,7 @@ interface Params {
 }
 
 interface ToDo {
-  id: number;
+  id: string;
   text: string;
   checked: boolean;
 }
@@ -38,8 +39,8 @@ const TodoPage: FC<TodoPageProps> = ({ params }) => {
       setTodos([
         ...todos,
         {
-          id: todos.length + 1,
-          text: inputValue,
+          id: Date.now().toString(), // Generate unique ID using timestamp
+          text: inputValue.trim(),
           checked: false,
         },
       ]);
@@ -71,7 +72,7 @@ const TodoPage: FC<TodoPageProps> = ({ params }) => {
     }
   };
 
-  const handleCheckboxChange = (id: number) => {
+  const handleCheckboxChange = (id: string) => {
     setTodos((prevTodos) =>
       prevTodos.map((todo) =>
         todo.id === id ? { ...todo, checked: !todo.checked } : todo
@@ -81,7 +82,7 @@ const TodoPage: FC<TodoPageProps> = ({ params }) => {
 
   return (
     <>
-      <div className="min-h-full grid place-items-center p-3 max-lg:pt-3">
+      <div className="min-h-full grid place-items-center py-5 p-3 max-lg:pt-3">
         <div className="px-2 space-y-5">
           <div className="flex flex-col items-center space-y-3">
             <h2 className="text-6xl text-primary text-center font-semibold max-lg:hidden">
@@ -135,7 +136,7 @@ const TodoPage: FC<TodoPageProps> = ({ params }) => {
           </ul>
         </div>
       </div>
-      {isModalOpen && currentTodo ? (
+      {isModalOpen && currentTodo && (
         <dialog open className="modal bg-black/30">
           <div className="modal-box">
             <button
@@ -157,12 +158,12 @@ const TodoPage: FC<TodoPageProps> = ({ params }) => {
                 }
               />
               <div className="flex justify-between gap-5 mt-4">
-                <button type="submit" className="btn btn-success btn-outline w-[48%]">
+                <button type="submit" className="btn btn-success btn-outline w-[47%] sm:w-[48%]">
                   Save <i className="fa-solid fa-check"></i>
                 </button>
                 <button
                   type="button"
-                  className="btn btn-error btn-outline w-[48%]"
+                  className="btn btn-error btn-outline w-[47%] sm:w-[48%]"
                   onClick={handleDelete}
                 >
                   Delete <i className="fa-regular fa-trash-can"></i>
@@ -171,7 +172,8 @@ const TodoPage: FC<TodoPageProps> = ({ params }) => {
             </form>
           </div>
         </dialog>
-      ) : null}
+      )}
+      <ToTop />
     </>
   );
 };
