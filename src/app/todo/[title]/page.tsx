@@ -20,7 +20,6 @@ const TodoPage: FC<TodoPageProps> = ({ params }) => {
   const paramsId = decodeURIComponent(params.title);
   const ampersandIndex = paramsId.indexOf("&");
   const displayedTitle = paramsId.slice(0, ampersandIndex);
-
   const [inputValue, setInputValue] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [currentTodo, setCurrentTodo] = useState<ToDo | null>(null);
@@ -39,7 +38,7 @@ const TodoPage: FC<TodoPageProps> = ({ params }) => {
       setTodos([
         ...todos,
         {
-          id: Date.now().toString(), // Generate unique ID using timestamp
+          id: Date.now().toString(),
           text: inputValue.trim(),
           checked: false,
         },
@@ -67,9 +66,15 @@ const TodoPage: FC<TodoPageProps> = ({ params }) => {
 
   const handleDelete = () => {
     if (currentTodo) {
-      setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== currentTodo.id));
+      setTodos((prevTodos) =>
+        prevTodos.filter((todo) => todo.id !== currentTodo.id)
+      );
       toggleModal();
     }
+  };
+
+  const handleDeleteAllChecked = () => {
+    setTodos((prevTodos) => prevTodos.filter((todo) => !todo.checked));
   };
 
   const handleCheckboxChange = (id: string) => {
@@ -88,24 +93,37 @@ const TodoPage: FC<TodoPageProps> = ({ params }) => {
             <h2 className="text-6xl text-primary text-center font-semibold max-lg:hidden">
               {displayedTitle} ToDo
             </h2>
-            <form
-              onSubmit={handleFormSubmit}
-              className="flex items-center border-2 border-primary rounded-full pl-3"
-            >
-              <input
-                type="text"
-                className="input bg-transparent w-full sm:w-96 rounded-full p-2"
-                placeholder="Add Your ToDo"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-              />
-              <button
-                type="submit"
-                className="btn btn-primary rounded-full w-20"
+            <div className="flex gap-2">
+              <form
+                onSubmit={handleFormSubmit}
+                className="flex items-center border-2 border-primary rounded-full pl-3"
               >
-                Add
-              </button>
-            </form>
+                <input
+                  type="text"
+                  className="input bg-transparent w-full sm:w-96 rounded-full p-2"
+                  placeholder="Add Your ToDo"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  aria-label="Add Your ToDo"
+                />
+                <button
+                  type="submit"
+                  className="btn btn-primary rounded-full w-20"
+                  aria-label="Add ToDo"
+                >
+                  Add
+                </button>
+              </form>
+              {todos.some(todo => todo.checked) && (
+                <button
+                  className="btn btn-error text-xs ring-2 ring-error rounded-full"
+                  onClick={handleDeleteAllChecked}
+                  aria-label="Delete All Checked"
+                >
+                  <i className="fa-solid fa-trash-can"></i> All Checked
+                </button>
+              )}
+            </div>
           </div>
           <ul className="h-full space-y-2">
             {todos.map((todo) => (
@@ -116,6 +134,9 @@ const TodoPage: FC<TodoPageProps> = ({ params }) => {
                     className="checkbox checkbox-primary rounded-full"
                     checked={todo.checked}
                     onChange={() => handleCheckboxChange(todo.id)}
+                    aria-label={`Mark ${todo.text} as ${
+                      todo.checked ? "incomplete" : "complete"
+                    }`}
                   />
                   <span
                     className={`text-lg sm:text-xl break-all flex-1 ${
@@ -127,6 +148,7 @@ const TodoPage: FC<TodoPageProps> = ({ params }) => {
                   <button
                     className="btn btn-circle btn-sm btn-primary"
                     onClick={() => toggleModal(todo)}
+                    aria-label={`Edit ${todo.text}`}
                   >
                     <i className="fa-solid fa-ellipsis-vertical"></i>
                   </button>
@@ -142,6 +164,7 @@ const TodoPage: FC<TodoPageProps> = ({ params }) => {
             <button
               onClick={() => toggleModal()}
               className="btn btn-sm btn-circle btn-outline btn-primary text-primary absolute right-3 top-2"
+              aria-label="Close"
             >
               <i className="fa-solid fa-xmark fa-xl"></i>
             </button>
@@ -156,15 +179,21 @@ const TodoPage: FC<TodoPageProps> = ({ params }) => {
                     text: e.target.value,
                   })
                 }
+                aria-label="Edit ToDo"
               />
               <div className="flex justify-between gap-5 mt-4">
-                <button type="submit" className="btn btn-success btn-outline w-[47%] sm:w-[48%]">
+                <button
+                  type="submit"
+                  className="btn btn-success btn-outline w-[47%] sm:w-[48%]"
+                  aria-label="Save Changes"
+                >
                   Save <i className="fa-solid fa-check"></i>
                 </button>
                 <button
                   type="button"
                   className="btn btn-error btn-outline w-[47%] sm:w-[48%]"
                   onClick={handleDelete}
+                  aria-label="Delete ToDo"
                 >
                   Delete <i className="fa-regular fa-trash-can"></i>
                 </button>

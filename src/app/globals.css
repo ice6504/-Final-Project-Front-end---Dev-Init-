@@ -15,11 +15,14 @@
   .btn {
     font-weight: 800;
   }
-  .btn-primary {
+  .btn-primary , .btn-error {
     color: white;
   }
-  .btn-error{
-    color: white;
+  .btn-outline {
+    &.btn-error:hover,
+    &.btn-success:hover {
+      color: white;
+    }
   }
   .input:focus-within {
     border: none;
