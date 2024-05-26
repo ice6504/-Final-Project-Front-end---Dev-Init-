@@ -20,11 +20,11 @@ function ToTop() {
 
   window.addEventListener("scroll", toggleVisible);
   return (
-    <div className={`z-30 fixed bottom-5 right-5 tooltip tooltip-left ${visible ? "" : "hidden"}`} data-tip="Scroll To Top">
+    <div className={`z-30 fixed max-sm:top-[4.5rem] max-sm:inset-x-0 sm:bottom-5 sm:right-5  tooltip tooltip-left ${visible ? "" : "hidden"}`} data-tip="Scroll To Top">
       <button
-        className="btn btn-outline btn-circle btn-primary drop-shadow-xl"
+        className="btn btn-outline btn-circle btn-primary shadow-2xl"
         onClick={scrollToTop}
-      >
+      > 
         <i className="fa-solid fa-arrow-up"></i>
       </button>
     </div>
