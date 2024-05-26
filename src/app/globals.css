@@ -18,6 +18,9 @@
   .btn-primary {
     color: white;
   }
+  .btn-error{
+    color: white;
+  }
   .input:focus-within {
     border: none;
     outline: transparent;

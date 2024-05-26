@@ -32,11 +32,7 @@ const loadFromStorage = async (id: string) => {
 const Editor: FC<Props> = ({ data_id }) => {
   const [initialContent, setInitialContent] = useState<
     PartialBlock[] | undefined | "loading"
-  >("loading");
-
-  const decodedTitle = decodeURIComponent(data_id);
-  const ampersandIndex = decodedTitle.indexOf("&");
-  const paramsId = decodedTitle.slice(ampersandIndex + 1);  
+  >("loading"); 
 
   useEffect(() => {
     loadFromStorage(data_id).then((content) => {
@@ -56,7 +52,7 @@ const Editor: FC<Props> = ({ data_id }) => {
   }
 
   return (
-    <div className="py-2">
+    <div className="py-2 sm:pt-5">
       <BlockNoteView
         editor={editor}
         editable={true}
