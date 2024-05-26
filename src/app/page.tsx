@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <div className="h-fit lg:h-screen p-5 flex flex-col gap-3">
       <h2 className="text-5xl font-bold text-primary max-lg:hidden">
-        Home Page
+        🏠Home Page
       </h2>
       <div className="flex max-xl:flex-col h-[45%] xl:h-[85%] gap-5 sm:px-1">
         {/* MyNote */}

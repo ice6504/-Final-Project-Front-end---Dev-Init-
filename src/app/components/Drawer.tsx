@@ -61,7 +61,7 @@ function Drawer({ children }: { children: React.ReactNode }) {
       displayedTitle = decodedTitle;
     }
   } else {
-    displayedTitle = "Home Page";
+    displayedTitle = "🏠Home Page";
   }
 
   const toggleDrawer = () => {

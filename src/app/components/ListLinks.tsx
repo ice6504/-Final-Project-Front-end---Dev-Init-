@@ -35,7 +35,7 @@ const ListLinks: FC<Props> = ({ type }) => {
           return (
             <div key={link.id} className="menu menu-lg text-white">
               <li>
-                <Link href={link.href}>{link.title}</Link>
+                <Link href={link.href}>{link.title} - {link.date}</Link>
               </li>
             </div>
           );
