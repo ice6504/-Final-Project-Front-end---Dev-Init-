@@ -1,6 +1,9 @@
 "use client";
 import { FC, useState, useEffect } from "react";
+
+// components
 import ToTop from "@/app/components/ToTop";
+import DeletePage from "@/app/components/DeletePage";
 
 interface TodoPageProps {
   params: Params;
@@ -87,6 +90,9 @@ const TodoPage: FC<TodoPageProps> = ({ params }) => {
 
   return (
     <>
+      <div className="fixed top-5 right-5 z-40 max-lg:hidden">
+        <DeletePage />
+      </div>
       <div className="min-h-full grid place-items-center py-5 p-3 max-lg:pt-3">
         <div className="px-2 space-y-5">
           <div className="flex flex-col items-center space-y-3">
@@ -114,7 +120,7 @@ const TodoPage: FC<TodoPageProps> = ({ params }) => {
                   Add
                 </button>
               </form>
-              {todos.some(todo => todo.checked) && (
+              {todos.some((todo) => todo.checked) && (
                 <button
                   className="btn btn-error text-xs ring-2 ring-error rounded-full"
                   onClick={handleDeleteAllChecked}
