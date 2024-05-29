@@ -12,7 +12,7 @@ Project of Personal Information Management Website. You can access this website 
 - `daisyUI`
 - `Blocknotejs`
 
-## 💻 How Can I Run It?
+## 💻 How Can I Run It ?
 
 1. `Clone` this repository
 
@@ -37,3 +37,37 @@ code .
 ```cmd
 npm run dev
 ```
+
+## 📄 How to use ?
+### Create a New Page
+ 1. Click the create icon in the sidebar.
+ 2. Select either "ToDo Page" or "Note Page."
+ 3. Enter your page title.
+### Delete Page
+ 1. Open the page you want to delete.
+ 2. Click the "🗑 This Page" button in the top right corner or in the dropdown button at navbar on mobile and tablet.
+### ToDo list Page
+ 1. `Add`
+    - Enter your ToDo item in the input bar and click the Add button.
+ 2. `Edit`
+    - Click the list icon button and edit your ToDo item in the input bar.
+    - Click the "Save" button
+ 3. `Delete`
+    - Click the list icon button
+    - Click the "Delete" button
+### Note Page
+ 1. Slash `/` to select menu:
+ 
+    -  <img src="https://github.com/TypeCellOS/BlockNote/blob/readme/.resources/slashmenu.gif?raw=true" width="320"  />
+
+ 2. `Drag and drop` blocks:
+ 
+    -  <img src="https://github.com/TypeCellOS/BlockNote/blob/readme/.resources/dragdrop.gif?raw=true" width="320" />
+
+ 3. `Format` menu:
+ 
+    - <img src="https://github.com/TypeCellOS/BlockNote/blob/readme/.resources/selectmenu.gif?raw=true" width="320" />
+
+ 4. `Nesting / indentation` with tab and shift+tab:
+  
+    - <img src="https://github.com/TypeCellOS/BlockNote/blob/readme/.resources/nesting.gif?raw=true" width="320" />
