@@ -178,7 +178,7 @@ const TodoPage: FC<TodoPageProps> = ({ params }) => {
               <input
                 type="text"
                 value={currentTodo.text}
-                className="input bg-primary text-base-100 placeholder:text-base-100/50 w-full mt-8"
+                className="input bg-primary text-white placeholder:text-base-100/50 w-full mt-8"
                 onChange={(e) =>
                   setCurrentTodo({
                     ...currentTodo,

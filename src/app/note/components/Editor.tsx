@@ -2,7 +2,8 @@
 import { Block, BlockNoteEditor, PartialBlock } from "@blocknote/core";
 import { BlockNoteView } from "@blocknote/mantine";
 import "@blocknote/mantine/style.css";
-import { FC, useState, useEffect, useMemo } from "react";
+import { FC, useState, useEffect, useMemo, useContext } from "react";
+import { ThemeContext } from "@/context/ThemeContext";
 import "./styles.css";
 
 interface Props {
@@ -32,7 +33,8 @@ const loadFromStorage = async (id: string) => {
 const Editor: FC<Props> = ({ data_id }) => {
   const [initialContent, setInitialContent] = useState<
     PartialBlock[] | undefined | "loading"
-  >("loading"); 
+  >("loading");
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     loadFromStorage(data_id).then((content) => {
@@ -51,12 +53,14 @@ const Editor: FC<Props> = ({ data_id }) => {
     return "Loading...";
   }
 
+  const editorTheme = theme === "light" || theme === "dark" ? theme : "light";
+
   return (
     <div className="py-2 sm:pt-5">
       <BlockNoteView
         editor={editor}
         editable={true}
-        theme="light"
+        theme={editorTheme}
         onChange={() => {
           saveToStorage(data_id, editor.document);
         }}

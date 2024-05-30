@@ -1,9 +1,13 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+
+// components
+import { ThemeContext } from "@/context/ThemeContext";
 import Navbar from "./Navbar";
+import ThemeButton from "./ThemeButton";
 
 const STORAGE_KEY = "sidebarLinks";
 
@@ -25,6 +29,7 @@ function Drawer({ children }: { children: React.ReactNode }) {
   const [newLinkType, setNewLinkType] = useState<"Note" | "ToDo" | null>(null);
   const [newLinkTitle, setNewLinkTitle] = useState<string>("");
   const [search, setSearch] = useState<string>("");
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     const savedLinks = localStorage.getItem(STORAGE_KEY);
@@ -127,7 +132,9 @@ function Drawer({ children }: { children: React.ReactNode }) {
         <div className="drawer-content flex flex-col">
           <Navbar title={displayedTitle} />
           {/* Content */}
-          <main className="min-h-full max-lg:pt-16">{children}</main>
+          <main className="min-h-full max-lg:min-h-screen max-lg:pt-16">
+            {children}
+          </main>
         </div>
         <div className="drawer-side z-[101]">
           <label
@@ -140,11 +147,7 @@ function Drawer({ children }: { children: React.ReactNode }) {
               links.length === 0 ? "h-full flex flex-col" : "min-h-full"
             } `}
           >
-            <div
-              className={`flex ${
-                links.length > 0 ? "justify-between" : "justify-center"
-              } items-center`}
-            >
+            <div className={`flex justify-between items-center`}>
               <Link
                 href="/"
                 className="active:scale-90 transition-all ease-in-out"
@@ -152,23 +155,24 @@ function Drawer({ children }: { children: React.ReactNode }) {
               >
                 <Image
                   className="w-28"
-                  src="/Logo.svg"
+                  src={`${theme === "light" ? "/Logo.svg" : "/Logo_dark.svg"}`}
                   alt="Logo"
                   width={0}
                   height={0}
                   priority={true}
                 />
               </Link>
-              {links.length > 0 ? (
-                <div>
+              <div className="flex items-center">
+                <ThemeButton />
+                {links.length > 0 ? (
                   <button
                     onClick={toggleModal}
                     className="btn btn-ghost btn-square size-fit px-2"
                   >
                     <i className="fa-solid fa-pen-to-square fa-2xl"></i>
                   </button>
-                </div>
-              ) : null}
+                ) : null}
+              </div>
             </div>
             {/* SearchBar */}
             <label className="input input-sm rounded-full h-10 flex items-center gap-2 mt-3">
@@ -230,7 +234,7 @@ function Drawer({ children }: { children: React.ReactNode }) {
                 <div className="h-full grid place-content-center">
                   <button
                     onClick={toggleModal}
-                    className="btn btn-ghost btn-block no-animation size-32 text-5xl text-black/65"
+                    className="btn btn-ghost btn-block no-animation size-32 text-5xl text-base/65"
                   >
                     <i className="fa-solid fa-pen-to-square fa-2xl"></i>
                   </button>
@@ -294,7 +298,7 @@ function Drawer({ children }: { children: React.ReactNode }) {
                 type="text"
                 maxLength={10}
                 placeholder="Add Title"
-                className="input bg-primary text-base-100 placeholder:text-base-100/50 w-full mt-8"
+                className="input bg-primary text-white placeholder:text-white/75 w-full mt-8"
                 value={newLinkTitle}
                 onChange={(e) => setNewLinkTitle(e.target.value)}
               />

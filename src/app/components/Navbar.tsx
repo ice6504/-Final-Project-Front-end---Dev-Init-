@@ -1,5 +1,3 @@
-"use client";
-
 import { FC } from "react";
 
 // components
@@ -12,7 +10,7 @@ interface HeaderProps {
 const Navbar: FC<HeaderProps> = ({ title }) => {
   return (
     <>
-      <div className="navbar bg-primary text-base-100 z-[100] fixed top-0 lg:hidden">
+      <div className="navbar bg-primary text-white z-[100] fixed top-0 lg:hidden">
         <div className="flex-none ">
           <label
             htmlFor="my-drawer-3"
@@ -35,7 +33,7 @@ const Navbar: FC<HeaderProps> = ({ title }) => {
               </div>
               <ul
                 tabIndex={0}
-                className="dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-40"
+                className="dropdown-content z-[1] p-2 shadow bg-white rounded-box w-40"
               >
                 <li className="flex justify-center">
                   <DeletePage />
