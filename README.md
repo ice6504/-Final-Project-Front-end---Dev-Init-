@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<div align="center">
+    <h1>GoNote</h1>
+</div>
 
-## Getting Started
+Project of Personal Information Management Website. You can access this website on <a href='https://gonote-final-dev-init.vercel.app/'>Vercel</a>
 
-First, run the development server:
+## 📦 Tecnologies Used
+- `React`
+- `Next.js`
+- `TypeScript`
+- `Tailwind CSS`
+- `daisyUI`
+- `Blocknotejs`
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 💻 How Can I Run It ?
+
+1. `Clone` this repository
+
+```cmd
+  git clone https://github.com/ice6504/Final-Project-Frontend-Dev-Init.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Run `npm install` on your CMD to get all dependencies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```cmd
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+3. Open your `code editor` to edit the project
 
-## Learn More
+```cmd
+code .
+```
 
-To learn more about Next.js, take a look at the following resources:
+4. Start the development server by running `npm run dev` to initialize the website
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```cmd
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## 📄 How to use ?
+### Create a New Page
+ 1. Click the create icon in the sidebar.
+ 2. Select either "ToDo Page" or "Note Page."
+ 3. Enter your page title.
+### Delete Page
+ 1. Open the page you want to delete.
+ 2. Click the "🗑 This Page" button in the top right corner or in the dropdown button at navbar on mobile and tablet.
+### ToDo list Page
+ 1. `Add`
+    - Enter your ToDo item in the input bar and click the Add button.
+ 2. `Edit`
+    - Click the list icon button and edit your ToDo item in the input bar.
+    - Click the "Save" button
+ 3. `Delete`
+    - Click the list icon button
+    - Click the "Delete" button
+### Note Page
+ 1. Slash `/` to select menu:
+ 
+    -  <img src="https://github.com/TypeCellOS/BlockNote/blob/readme/.resources/slashmenu.gif?raw=true" width="320"  />
 
-## Deploy on Vercel
+ 2. `Drag and drop` blocks:
+ 
+    -  <img src="https://github.com/TypeCellOS/BlockNote/blob/readme/.resources/dragdrop.gif?raw=true" width="320" />
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+ 3. `Format` menu:
+ 
+    - <img src="https://github.com/TypeCellOS/BlockNote/blob/readme/.resources/selectmenu.gif?raw=true" width="320" />
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+ 4. `Nesting / indentation` with tab and shift+tab:
+  
+    - <img src="https://github.com/TypeCellOS/BlockNote/blob/readme/.resources/nesting.gif?raw=true" width="320" />
