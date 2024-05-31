@@ -21,7 +21,7 @@ const Navbar: FC<HeaderProps> = ({ title }) => {
           </label>
         </div>
         <div className="flex-1 px-2 mx-2 font-bold text-xl">{title}</div>
-        {title !== "🏠Home Page" && (
+        {(title !== "🏠Home Page" && title !== "🗓️Planner Page") && (
           <div className="flex-none mr-1">
             <div className="dropdown dropdown-bottom dropdown-end">
               <div

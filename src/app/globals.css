@@ -15,7 +15,8 @@
   .btn {
     font-weight: 800;
   }
-  .btn-primary , .btn-error {
+  .btn-primary,
+  .btn-error {
     color: white;
   }
   .btn-outline {
@@ -40,5 +41,75 @@
         background-color: oklch(var(--p));
       }
     }
+  }
+  .tooltip-primary {
+    --tooltip-text-color: white;
+  }
+}
+
+/* Calendar */
+
+.fc {
+  @apply h-[90%];
+
+  &.fc-header-toolbar {
+    display: inline-block;
+    padding: 4px 4px;
+    @apply space-x-8;
+  }
+  .fc-toolbar-title {
+    @apply text-xl sm:text-3xl text-primary font-semibold;
+  }
+
+  .fc-col-header-cell {
+    @apply bg-primary text-white font-medium text-end px-1;
+  }
+
+  .fc-day-other {
+    @apply bg-neutral/10 text-base-content/50;
+  }
+
+  &.fc-day {
+    @apply m-8;
+  }
+
+  &.fc-scrollgrid-sync-table {
+    @apply w-full;
+  }
+
+  &.fc-view {
+    @apply w-full h-full;
+  }
+
+  &.fc-h-event {
+    @apply bg-primary border border-primary;
+  }
+
+  .fc-daygrid-day.fc-day-today {
+    @apply bg-transparent;
+
+    .fc-daygrid-day-number {
+      @apply rounded-full size-8 flex justify-center items-center bg-primary text-white;
+    }
+
+    &.fc-day-other {
+      @apply bg-neutral/10;
+    }
+  }
+
+  .fc-button {
+    @apply bg-primary hover:bg-neutral border-none;
+  }
+
+  .fc-button-primary:not(:disabled).fc-button-active {
+    @apply bg-primary;
+  }
+
+  .fc-button-primary:disabled {
+    @apply bg-primary/80;
+  }
+
+  &.fc-v-event {
+    @apply bg-primary/90;
   }
 }

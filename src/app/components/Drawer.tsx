@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useContext } from "react";
-import { useParams } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -21,6 +21,7 @@ interface Links {
 
 function Drawer({ children }: { children: React.ReactNode }) {
   const { title } = useParams<{ title: string }>();
+  const pathname = usePathname();
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isModalTitleOpen, setIsModalTitleOpen] = useState<boolean>(false);
@@ -66,7 +67,11 @@ function Drawer({ children }: { children: React.ReactNode }) {
       displayedTitle = decodedTitle;
     }
   } else {
-    displayedTitle = "🏠Home Page";
+    if (pathname === "/planner") {
+      displayedTitle = "🗓️Planner Page";
+    } else {
+      displayedTitle = "🏠Home Page";
+    }
   }
 
   const toggleDrawer = () => {
@@ -100,7 +105,9 @@ function Drawer({ children }: { children: React.ReactNode }) {
       date: `${formattedDate}`,
       title: `${title}`,
       type: `${newLinkType}`,
-      href: `/${newLinkType?.toLowerCase()}/${title}&${links.length + 1}`,
+      href: `/${newLinkType?.toLowerCase()}/${encodeURIComponent(
+        title
+      )}&${links.length + 1}`,
     };
     const updatedLinks = [...links, newLink];
     setLinks(updatedLinks);
@@ -168,6 +175,7 @@ function Drawer({ children }: { children: React.ReactNode }) {
                   <button
                     onClick={toggleModal}
                     className="btn btn-ghost btn-square size-fit px-2"
+                    aria-label="open modal"
                   >
                     <i className="fa-solid fa-pen-to-square fa-2xl"></i>
                   </button>
@@ -186,6 +194,7 @@ function Drawer({ children }: { children: React.ReactNode }) {
                   setSearch(e.target.value);
                   searchPage(e.target.value);
                 }}
+                aria-label="search"
               />
             </label>
             {/* Nav */}
@@ -235,6 +244,7 @@ function Drawer({ children }: { children: React.ReactNode }) {
                   <button
                     onClick={toggleModal}
                     className="btn btn-ghost btn-block no-animation size-32 text-5xl text-base/65"
+                    aria-label="add new link"
                   >
                     <i className="fa-solid fa-pen-to-square fa-2xl"></i>
                   </button>
@@ -251,6 +261,7 @@ function Drawer({ children }: { children: React.ReactNode }) {
             <button
               onClick={toggleModal}
               className="btn btn-sm btn-circle btn-outline btn-primary text-primary absolute right-3 top-2"
+              aria-label="close modal"
             >
               <i className="fa-solid fa-xmark fa-xl"></i>
             </button>
@@ -290,6 +301,7 @@ function Drawer({ children }: { children: React.ReactNode }) {
             <button
               onClick={toggleModalTitle}
               className="btn btn-sm btn-circle btn-outline btn-primary text-primary absolute right-3 top-2"
+              aria-label="close title modal"
             >
               <i className="fa-solid fa-xmark fa-xl"></i>
             </button>
@@ -301,13 +313,12 @@ function Drawer({ children }: { children: React.ReactNode }) {
                 className="input bg-primary text-white placeholder:text-white/75 w-full mt-8"
                 value={newLinkTitle}
                 onChange={(e) => setNewLinkTitle(e.target.value)}
+                aria-label="new link title"
               />
               {newLinkTitle.length === 10 ? (
-                <>
-                  <div className="badge badge-primary badge-outline my-2">
-                    Max Length is 10
-                  </div>
-                </>
+                <div className="badge badge-primary badge-outline my-2">
+                  Max Length is 10
+                </div>
               ) : null}
               <button
                 type="submit"

@@ -11,6 +11,8 @@ Project of Personal Information Management Website. You can access this website 
 - `Tailwind CSS`
 - `daisyUI`
 - `Blocknotejs`
+- `FullCalendar`
+
 
 ## 💻 How Can I Run It ?
 
