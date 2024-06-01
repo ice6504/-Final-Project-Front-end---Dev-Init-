@@ -57,6 +57,7 @@
     padding: 4px 4px;
     @apply space-x-8;
   }
+  
   .fc-toolbar-title {
     @apply text-xl sm:text-3xl text-primary font-semibold;
   }
@@ -85,11 +86,17 @@
     @apply bg-primary border border-primary;
   }
 
-  .fc-daygrid-day.fc-day-today {
-    @apply bg-transparent;
-
-    .fc-daygrid-day-number {
-      @apply rounded-full size-8 flex justify-center items-center bg-primary text-white;
+  .fc-day-today {
+    &.fc-daygrid-day {
+      @apply bg-transparent;
+    }
+    
+    .fc-daygrid-day-top {
+      @apply flex justify-start items-center px-1;
+      
+      .fc-daygrid-day-number {
+        @apply text-white rounded-full bg-primary w-8 text-center;
+      }
     }
 
     &.fc-day-other {
