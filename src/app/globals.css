@@ -92,7 +92,7 @@
     }
     
     .fc-daygrid-day-top {
-      @apply flex justify-start items-center px-1;
+      @apply flex justify-end items-center mx-1;
       
       .fc-daygrid-day-number {
         @apply text-white rounded-full bg-primary w-8 text-center;
