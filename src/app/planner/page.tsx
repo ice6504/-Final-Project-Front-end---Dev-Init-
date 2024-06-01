@@ -1,49 +1,183 @@
 "use client";
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // components
 import Calendar from "./components/Calendar";
 
+interface Event {
+  id: number;
+  title: string;
+  allDay: boolean;
+  date: string;
+}
+
 function PlannerPage() {
-  const [events, setEvents] = useState([
-    // Example events
-    { title: "Event 1", date: "2023-06-01" },
-    { title: "Event 2", date: "2023-06-02" },
-  ]);
+  const [allEvents, setAllEvents] = useState<Event[]>(() => {
+    const saveEvents = localStorage.getItem("events");
+    return saveEvents ? JSON.parse(saveEvents) : [];
+  });
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
+  const [inputTitle, setInputTitle] = useState<string>("");
+  const [editTitle, setEditTitle] = useState<string>("");
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+  const [selectedDate, setSelectedDate] = useState<string>("");
+
+  // Function to save events to localStorage
+  const saveEventsToLocalStorage = (events: Event[]) => {
+    localStorage.setItem("events", JSON.stringify(events));
+  };
+
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+    setInputTitle("");
+  };
+
+  const toggleEditModal = () => {
+    setIsEditModalOpen(!isEditModalOpen);
+  };
 
   const handleEventClick = (arg: any) => {
-    console.log("Event clicked:", arg.event.title);
+    const clickedEvent = allEvents.find(
+      (event) => event.id === Number(arg.event.id)
+    );
+    if (clickedEvent) {
+      setSelectedEvent(clickedEvent);
+      setEditTitle(clickedEvent.title);
+    }
+    toggleEditModal();
   };
 
   const handleDateSelect = (arg: any) => {
-    const title = prompt("Enter a title for the event:");
-    if (title) {
-      setEvents([...events, { title, date: arg.startStr }]);
+    setSelectedDate(arg.dateStr);
+    toggleModal();
+  };
+
+  const handleEventDrop = (arg: any) => {};
+
+  const handleFormSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    // Add new event
+    const newEvent: Event = {
+      id: Date.now(),
+      title: inputTitle,
+      allDay: true,
+      date: selectedDate,
+    };
+    setAllEvents([...allEvents, newEvent]);
+    saveEventsToLocalStorage([...allEvents, newEvent]); // Save events after add
+    toggleModal();
+  };
+
+  const handleEditFormSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    if (selectedEvent) {
+      const updatedEvents = allEvents.map((ev) =>
+        ev.id === selectedEvent.id ? { ...ev, title: editTitle } : ev
+      );
+      setAllEvents(updatedEvents);
+      saveEventsToLocalStorage(updatedEvents); // Save events after edit
+      toggleEditModal();
     }
   };
 
-  const handleEventDrop = (arg: any) => {
-    const updatedEvents = events.map((event) =>
-      event.title === arg.event.title
-        ? { ...event, date: arg.event.startStr }
-        : event
-    );
-    setEvents(updatedEvents);
+  const handleDeleteEvent = () => {
+    if (selectedEvent) {
+      const updatedEvents = allEvents.filter(
+        (event) => event.id !== selectedEvent.id
+      );
+      setAllEvents(updatedEvents);
+      saveEventsToLocalStorage(updatedEvents); // Save events after delete
+      toggleEditModal();
+    }
   };
 
   return (
-    <div className="p-5 flex flex-col gap-5 h-screen">
-      <h2 className="text-5xl font-bold text-primary max-lg:hidden">
-        🗓️Planner Page
-      </h2>
-      <Calendar
-        events={events}
-        handleEventClick={handleEventClick}
-        handleDateSelect={handleDateSelect}
-        handleEventDrop={handleEventDrop}
-      />
-    </div>
+    <>
+      <div className="p-5 flex flex-col gap-5 h-screen">
+        <h2 className="text-5xl font-bold text-primary max-lg:hidden">
+          🗓️Planner Page
+        </h2>
+        <Calendar
+          events={allEvents}
+          handleEventClick={handleEventClick}
+          handleDateSelect={handleDateSelect}
+          handleEventDrop={handleEventDrop}
+        />
+      </div>
+      {isModalOpen && (
+        <dialog open className="modal bg-black/30">
+          <div className="modal-box">
+            <button
+              onClick={toggleModal}
+              className="btn btn-sm btn-circle btn-outline btn-primary text-primary absolute right-3 top-2"
+              aria-label="Close"
+            >
+              <i className="fa-solid fa-xmark fa-xl"></i>
+            </button>
+            <form onSubmit={handleFormSubmit}>
+              <input
+                type="text"
+                placeholder="Add your event"
+                className="input bg-primary text-white placeholder:text-white/60 w-full mt-8"
+                value={inputTitle}
+                onChange={(e) => setInputTitle(e.target.value)}
+                aria-label="Add event"
+              />
+              <div className="mt-4">
+                <button
+                  type="submit"
+                  className="btn btn-primary btn-outline w-full"
+                  aria-label="Save event"
+                >
+                  Add
+                </button>
+              </div>
+            </form>
+          </div>
+        </dialog>
+      )}
+      {isEditModalOpen && selectedEvent && (
+        <dialog open className="modal bg-black/30">
+          <div className="modal-box">
+            <button
+              onClick={toggleEditModal}
+              className="btn btn-sm btn-circle btn-outline btn-primary text-primary absolute right-3 top-2"
+              aria-label="Close"
+            >
+              <i className="fa-solid fa-xmark fa-xl"></i>
+            </button>
+            <form onSubmit={handleEditFormSubmit}>
+              <input
+                type="text"
+                placeholder="Edit your event"
+                className="input bg-primary text-white placeholder:text-white/60 w-full mt-8"
+                value={editTitle}
+                onChange={(e) => setEditTitle(e.target.value)}
+                aria-label="Edit event"
+              />
+              <div className="mt-4 flex justify-between">
+                <button
+                  type="submit"
+                  className="btn btn-success btn-outline w-[47%] sm:w-[48%]"
+                  aria-label="Save event"
+                >
+                  Save <i className="fa-solid fa-check"></i>
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-error btn-outline w-[47%] sm:w-[48%]"
+                  onClick={handleDeleteEvent}
+                  aria-label="Delete event"
+                >
+                  Delete <i className="fa-regular fa-trash-can"></i>
+                </button>
+              </div>
+            </form>
+          </div>
+        </dialog>
+      )}
+    </>
   );
 }
 

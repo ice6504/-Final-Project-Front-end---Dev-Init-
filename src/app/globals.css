@@ -52,12 +52,16 @@
 .fc {
   @apply h-[90%];
 
+  .fc-toolbar.fc-header-toolbar {
+    @apply mb-3;
+  }
+
   &.fc-header-toolbar {
     display: inline-block;
     padding: 4px 4px;
     @apply space-x-8;
   }
-  
+
   .fc-toolbar-title {
     @apply text-xl sm:text-3xl text-primary font-semibold;
   }
@@ -90,10 +94,10 @@
     &.fc-daygrid-day {
       @apply bg-transparent;
     }
-    
+
     .fc-daygrid-day-top {
-      @apply flex justify-center items-center mx-1 w-8;
-      
+      @apply flex justify-center items-center mx-1 mt-[0.05rem] w-8;
+
       .fc-daygrid-day-number {
         @apply text-white rounded-full bg-primary w-8 text-center;
       }
@@ -118,5 +122,9 @@
 
   &.fc-v-event {
     @apply bg-primary/90;
+  }
+
+  .fc-h-event {
+    @apply bg-neutral border-none;
   }
 }

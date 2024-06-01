@@ -21,15 +21,14 @@ const Calendar: FC<Props> = ({
       plugins={[dayGridPlugin, interactionPlugin]}
       initialView="dayGridMonth"
       events={events}
+      nowIndicator={true}
+      editable={true}
+      droppable={true}
       selectable={true}
       selectMirror={true}
       eventClick={handleEventClick}
       dateClick={handleDateSelect}
-      eventDrop={handleEventDrop}
-      headerToolbar={{
-        left: "",
-        center: "title",
-      }}
+      drop={handleEventDrop}
     />
   );
 };
