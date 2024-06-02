@@ -8,6 +8,7 @@ interface Props {
   handleEventClick: (arg: any) => void;
   handleDateSelect: (arg: any) => void;
   handleEventDrop: (arg: any) => void;
+  handleEventResize: (arg: any) => void;
 }
 
 const Calendar: FC<Props> = ({
@@ -15,12 +16,21 @@ const Calendar: FC<Props> = ({
   handleEventClick,
   handleDateSelect,
   handleEventDrop,
+  handleEventResize,
 }) => {
+  const formattedEvents = events.map((event) => ({
+    id: event.id,
+    title: event.title,
+    start: event.date,
+    end: event.endDate,
+    allDay: event.allDay,
+  }));
+
   return (
     <FullCalendar
       plugins={[dayGridPlugin, interactionPlugin]}
       initialView="dayGridMonth"
-      events={events}
+      events={formattedEvents}
       nowIndicator={true}
       editable={true}
       droppable={true}
@@ -28,7 +38,8 @@ const Calendar: FC<Props> = ({
       selectMirror={true}
       eventClick={handleEventClick}
       dateClick={handleDateSelect}
-      drop={handleEventDrop}
+      eventDrop={handleEventDrop}
+      eventResize={handleEventResize}
     />
   );
 };

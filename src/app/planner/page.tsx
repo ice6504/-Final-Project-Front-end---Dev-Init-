@@ -9,6 +9,7 @@ interface Event {
   title: string;
   allDay: boolean;
   date: string;
+  endDate?: string;
 }
 
 function PlannerPage() {
@@ -53,7 +54,25 @@ function PlannerPage() {
     toggleModal();
   };
 
-  const handleEventDrop = (arg: any) => {};
+  const handleEventDrop = (arg: any) => {
+    const { event } = arg;
+    const updatedEvents = allEvents.map((ev) =>
+      ev.id === Number(event.id) ? { ...ev, date: event.startStr, endDate: event.endStr } : ev
+    );
+    setAllEvents(updatedEvents);
+    saveEventsToLocalStorage(updatedEvents);
+  };
+
+  const handleEventResize = (arg: any) => {
+    const { event } = arg;
+    const updatedEvents = allEvents.map((ev) =>
+      ev.id === Number(event.id)
+        ? { ...ev, date: event.startStr, endDate: event.endStr }
+        : ev
+    );
+    setAllEvents(updatedEvents);
+    saveEventsToLocalStorage(updatedEvents);
+  };
 
   const handleFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -103,6 +122,7 @@ function PlannerPage() {
           handleEventClick={handleEventClick}
           handleDateSelect={handleDateSelect}
           handleEventDrop={handleEventDrop}
+          handleEventResize={handleEventResize}
         />
       </div>
       {isModalOpen && (
