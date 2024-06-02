@@ -63,7 +63,7 @@
   }
 
   .fc-toolbar-title {
-    @apply text-xl sm:text-3xl text-primary font-semibold;
+    @apply max-[350px]:text-xs text-base sm:text-3xl text-primary font-semibold;
   }
 
   .fc-col-header-cell {
@@ -118,6 +118,10 @@
 
   .fc-button-primary:disabled {
     @apply bg-primary/80;
+  }
+
+  &.fc-direction-ltr .fc-toolbar > * > :not(:first-child) {
+    @apply max-sm:ml-1;
   }
 
   &.fc-v-event {

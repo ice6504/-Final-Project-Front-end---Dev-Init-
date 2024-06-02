@@ -57,7 +57,9 @@ function PlannerPage() {
   const handleEventDrop = (arg: any) => {
     const { event } = arg;
     const updatedEvents = allEvents.map((ev) =>
-      ev.id === Number(event.id) ? { ...ev, date: event.startStr, endDate: event.endStr } : ev
+      ev.id === Number(event.id)
+        ? { ...ev, date: event.startStr, endDate: event.endStr }
+        : ev
     );
     setAllEvents(updatedEvents);
     saveEventsToLocalStorage(updatedEvents);
@@ -77,15 +79,17 @@ function PlannerPage() {
   const handleFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     // Add new event
-    const newEvent: Event = {
-      id: Date.now(),
-      title: inputTitle,
-      allDay: true,
-      date: selectedDate,
-    };
-    setAllEvents([...allEvents, newEvent]);
-    saveEventsToLocalStorage([...allEvents, newEvent]); // Save events after add
-    toggleModal();
+    if (inputTitle.trim()) {
+      const newEvent: Event = {
+        id: Date.now(),
+        title: inputTitle,
+        allDay: true,
+        date: selectedDate,
+      };
+      setAllEvents([...allEvents, newEvent]);
+      saveEventsToLocalStorage([...allEvents, newEvent]); // Save events after add
+      toggleModal();
+    }
   };
 
   const handleEditFormSubmit = (event: React.FormEvent) => {
