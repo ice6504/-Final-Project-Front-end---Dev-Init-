@@ -94,4 +94,9 @@ npm run dev
     - Click to select an event.
     - Click the "Delete" button.
 4.  `Drag & drop` Event
+
+    - <img src="https://raw.githubusercontent.com/ice6504/Final-Project-Frontend-Dev-Init/master/public/drag%26drop.gif" width="400" />
+
 5.  `Extend` Date
+
+    - <img src="https://raw.githubusercontent.com/ice6504/Final-Project-Frontend-Dev-Init/master/public/extend_date.gif" width="400" />
